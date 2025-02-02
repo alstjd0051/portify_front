@@ -11,7 +11,8 @@ export default withAuth(
 
     // 공개 경로 (auth 페이지)에 로그인된 상태로 접근하는 경우
     if (pathname.startsWith("/auth") && token) {
-      return NextResponse.redirect(new URL("/", req.url));
+      const callbackUrl = req.nextUrl.searchParams.get("callbackUrl");
+      return NextResponse.redirect(new URL(callbackUrl || "/", req.url));
     }
 
     return NextResponse.next();
